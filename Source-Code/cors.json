@@ -1,0 +1,12 @@
+[
+  {
+    "origin": [
+      "https://tungsten-fitness.vercel.app",
+      "http://localhost:3000",
+      "http://127.0.0.1:5500"
+    ],
+    "method": ["GET", "POST", "PUT", "HEAD"],
+    "maxAgeSeconds": 3600,
+    "responseHeader": ["Content-Type", "x-goog-meta-*"]
+  }
+]

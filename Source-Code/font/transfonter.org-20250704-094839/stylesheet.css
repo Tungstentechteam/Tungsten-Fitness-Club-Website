@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'Agora';
+    src: url('Agora-Regular.woff2') format('woff2'),
+        url('Agora-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Tunning Demo Oxide';
+    src: url('Tunning-OxideBold.woff2') format('woff2'),
+        url('Tunning-OxideBold.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
