@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "tungstenwebsite-fe06b"
-  }
+    "default": "tungsten-fitness-club"
+  },
+  "targets": {},
+  "etags": {}
 }

@@ -658,7 +658,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--background-color);
+  background: #050504;
   transition: all 0.6s ease-out;
 }
 
@@ -9842,7 +9842,7 @@ section,
   display: flex !important;
   align-items: center;
   justify-content: center;
-  /* max-width: 950px !important; */
+  max-width: 870px !important;
   /* background:  red !important; */
 }
 
@@ -9856,5 +9856,6 @@ section,
 
 #ulweBranchModal {
   padding: 1rem !important;
+  /* max-width: 950px !important; */
   /* background:  red !important; */
 }

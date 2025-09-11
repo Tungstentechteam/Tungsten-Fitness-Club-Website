@@ -731,7 +731,7 @@ window.saveCareerForm = async function (event) {
     const storage = getStorage(app);
 
     // --- 1. Upload Resume (This is the step that requires the CORS fix) ---
-    const storageRef = ref(storage, `Tungsten-Website/resumes/${Date.now()}-${resumeFile.name}`);
+    const storageRef = ref(storage, `resumes/${Date.now()}-${resumeFile.name}`);
     const snapshot = await uploadBytes(storageRef, resumeFile);
     const resumeUrl = await getDownloadURL(snapshot.ref);
 
