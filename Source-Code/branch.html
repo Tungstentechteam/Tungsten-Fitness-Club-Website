@@ -105,40 +105,30 @@
     </div>
   </header>
 
-  <!-- ulwe popup -->
+  <!-- ULWE Modal -->
   <div class="modal fade" id="ulweBranchModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-side-right new-flex">
       <div class="poster-container modal-content">
         <button class="close-btn" data-bs-dismiss="modal" aria-label="Close">×</button>
         <div class="poster">
           <div class="celebrity-image">
-            <img src="./assets/img/MouniRoy.png" alt="Mouni Roy" />
+            <img src="./assets/img/1000228849.png" alt="Mouni Roy" />
           </div>
           <div class="content">
-            <p class="heading">
-              COMMING SOON <br /> IN ULWE
-            </p>
+            <p class="heading">COMING SOON <br /> IN ULWE</p>
             <p class="text">GET A CHANCE TO MEET</p>
             <p class="name">Mouni Roy</p>
-            <p class="text-1">
-              SUBMIT YOUR DETAILS FOR <br />
-              EXCLUSIVE PREMIER OFFER
-            </p>
-            <p class="date">11TH OCTOBER 2025</p>
+            <p class="text-1">SUBMIT YOUR DETAILS FOR <br /> EXCLUSIVE PREMIER OFFER</p>
+            <p class="date">11<sup class="sup-text">TH</sup> OCTOBER 2025</p>
             <div class="form-container">
               <form action="" class="ulwe-form" onsubmit="saveUlweForm(event)">
-                <input type="hidden" name="access_key" value="dc19721d-7e18-4789-9c2a-27334650088e">
+                <input type="hidden" name="access_key" value="7287b7ba-cfb9-4332-8d51-5754b68a67c2">
                 <input type="hidden" name="form_type" value="Ulwe Inquiry">
-                <input type="text" name="name" id="name" placeholder="Name" required />
-                <input type="tel" name="phone" id="phone" placeholder="Phone" required />
+                <input type="text" name="name" placeholder="Name" required />
+                <input type="tel" name="phone" placeholder="Phone" required />
                 <div class="form-footer">
                   <span class="spinner-border spinner-border-sm d-none me-2"></span>
                   <button class="button-text" type="submit">Submit</button>
-                </div>
-
-                <!-- Success Message -->
-                <div class="successMessage  alert alert-success mt-3 d-none">
-                  ✅ You will be contacted shortly!
                 </div>
               </form>
             </div>
@@ -146,7 +136,31 @@
         </div>
       </div>
     </div>
+
   </div>
+
+    <!-- Video Modal -->
+  <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-side-left">
+      <div class="modal-content">
+        <button class="close-btn" data-bs-dismiss="modal" aria-label="Close">×</button>
+        <div class="video-wrapper">
+          <video width="100%" autoplay muted controls>
+            <source src="./assets/videos/Mouni Roy.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Floating Buttons -->
+  <button id="reopenUlweBtn" class="contact-fab" style="display: block;" data-bs-toggle="modal" data-bs-target="#ulweBranchModal">
+    <img height="50" src="./assets/img/logos/Tungstun_Fitness_Club_Logo-2-removebg-preview.png" alt="">
+  </button>
+
+  <button id="reopenVideoBtn" class="contact-fab video-fab" style="display: flex;" data-bs-toggle="modal" data-bs-target="#videoModal">
+    <img height="100" src="./assets//img/1000228849.png" alt="">
+  </button>
 
   <main class="main">
     <!-- Hero Section -->

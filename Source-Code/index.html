@@ -168,9 +168,9 @@
   </div>
 
   <!-- Floating Buttons -->
-  <button id="reopenUlweBtn" class="contact-fab">
+  <!-- <button id="reopenUlweBtn" class="contact-fab">
     <img height="50" src="./assets/img/logos/Tungstun_Fitness_Club_Logo-2-removebg-preview.png" alt="">
-  </button>
+  </button> -->
 
   <!-- Floating Buttons -->
   <button id="reopenUlweBtn" class="contact-fab">
@@ -836,11 +836,10 @@
                   <div class="client-name text-ce">Aditya Devgadh</div>
                 </div>
               </div>
-              <div class="card video-card" onclick="openVideoModal('assets/video-2/Tfcn Feedback June.mp4')">
-                <video autoplay muted loop playsinline poster="./assets/Thumbnails/Screenshot 2025-09-09 152024.png">
+              <div class="card video-card" onclick="openVideoModal('assets/videos/Tfcn Feedback June.mp4')">
                 <video autoplay muted loop playsinline poster="./assets/Thumbnails/Screenshot 2025-09-09 152024.png">
                   <source
-                    src="assets/video-2/Tfcn Feedback June.mp4"
+                    src="assets/videos/Tfcn Feedback June.mp4"
                     type="video/mp4" />
                 </video>
                 <div class="play-icon">
@@ -909,10 +908,10 @@
 
             <div class="col-md-6 col-lg-3">
               <div class="card video-card"
-                onclick="openVideoModal('assets/video-2/Tfcn Feedback June.mp4')">
+                onclick="openVideoModal('assets/videos/Tfcn Feedback June.mp4')">
                 <video autoplay muted loop playsinline poster="./assets/Thumbnails/Screenshot 2025-09-09 152024.png">
                   <source
-                    src="assets/video-2/Tfcn Feedback June.mp4"
+                    src="assets/videos/Tfcn Feedback June.mp4"
                     type="video/mp4" />
                 </video>
                 <div class="play-icon">
@@ -1344,7 +1343,73 @@
   <div id="preloader">
     <img src="assets/img/Tungstun_Fitness_Club_Logo-bg.png" alt="Loading..." class="preloader-logo" loading="lazy">
   </div>
+<script>
+  // auto popup
+document.addEventListener("DOMContentLoaded", function () {
+  var ulweModal = new bootstrap.Modal(
+    document.getElementById("ulweBranchModal")
+  );
+  var videoModal = new bootstrap.Modal(document.getElementById("videoModal"));
 
+  var ulweBtn = document.getElementById("reopenUlweBtn");
+  var videoBtn = document.getElementById("reopenVideoBtn");
+
+  // Show both modals after 5 seconds
+  setTimeout(function () {
+    if (window.innerWidth < 768) {
+      // mobile → stack modals
+      ulweModal.show();
+      // setTimeout(() => videoModal.show(), 600); // small delay for stacking
+    } else {
+      // desktop → side by side
+      ulweModal.show();
+      // videoModal.show();
+    }
+  }, 5000);
+
+  // ULWE modal events
+  document
+    .getElementById("ulweBranchModal")
+    .addEventListener("hidden.bs.modal", function () {
+      ulweBtn.style.display = "flex";
+    });
+
+  document
+    .getElementById("ulweBranchModal")
+    .addEventListener("shown.bs.modal", function () {
+      ulweBtn.style.display = "none";
+    });
+
+  const ulweCard = document.getElementById("ulweCard");
+
+  ulweCard.addEventListener("click", function () {
+    ulweModal.show();
+    document.getElementById("mouni-video").style.display = "none";
+  });
+
+  ulweBtn.addEventListener("click", function () {
+    ulweModal.show();
+    document.getElementById("mouni-video").style.display = "none";
+  });
+
+  // VIDEO modal events
+  document
+    .getElementById("ulweBranchModal")
+    .addEventListener("hidden.bs.modal", function () {
+      videoBtn.style.display = "flex";
+    });
+
+  document
+    .getElementById("ulweBranchModal")
+    .addEventListener("shown.bs.modal", function () {
+      videoBtn.style.display = "none";
+    });
+
+  videoBtn.addEventListener("click", function () {
+    videoModal.show();
+  });
+});
+</script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>

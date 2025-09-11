@@ -380,7 +380,7 @@ window.saveForm = async function (event) {
 
     // ✅ Success Popup with SweetAlert2
     Swal.fire({
-      title: "Success!",
+      title: "Submitted",
       text: "Your information has been submitted successfully. We'll contact you shortly!",
       icon: "success",
       background: "var(--surface-color)",
@@ -508,7 +508,7 @@ window.saveUlweForm = async function (event) {
 
     // Success UI with SweetAlert2
     Swal.fire({
-      title: "Thank You!",
+      title: "Submitted",
       text: "Your Ulwe branch inquiry has been submitted successfully.",
       icon: "success",
       background: "var(--surface-color)",
@@ -629,7 +629,7 @@ window.saveFormfranchise = async function (event) {
     if (web3Response.ok) {
       // Success Popup with SweetAlert2
       Swal.fire({
-        title: "Franchise Inquiry Received!",
+        title: "Submitted",
         text: "Thank you for your interest in our franchise program. We'll contact you shortly.",
         icon: "success",
         background: "var(--surface-color)",
@@ -731,7 +731,7 @@ window.saveCareerForm = async function (event) {
     const storage = getStorage(app);
 
     // --- 1. Upload Resume (This is the step that requires the CORS fix) ---
-    const storageRef = ref(storage, `resumes/${Date.now()}-${resumeFile.name}`);
+    const storageRef = ref(storage, `Tungsten-Website/resumes/${Date.now()}-${resumeFile.name}`);
     const snapshot = await uploadBytes(storageRef, resumeFile);
     const resumeUrl = await getDownloadURL(snapshot.ref);
 
@@ -778,7 +778,7 @@ window.saveCareerForm = async function (event) {
       
       // Success Popup with SweetAlert2
       Swal.fire({
-        title: "Application Submitted!",
+        title: "Submitted!",
         text: "Thank you for applying. We'll review your application and contact you soon.",
         icon: "success",
         background: "var(--surface-color)",
@@ -838,70 +838,71 @@ document.addEventListener("DOMContentLoaded", function () {
   videos.forEach((video) => observer.observe(video));
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  var ulweModal = new bootstrap.Modal(
-    document.getElementById("ulweBranchModal")
-  );
-  var videoModal = new bootstrap.Modal(document.getElementById("videoModal"));
+// auto popup
+// document.addEventListener("DOMContentLoaded", function () {
+//   var ulweModal = new bootstrap.Modal(
+//     document.getElementById("ulweBranchModal")
+//   );
+//   var videoModal = new bootstrap.Modal(document.getElementById("videoModal"));
 
-  var ulweBtn = document.getElementById("reopenUlweBtn");
-  var videoBtn = document.getElementById("reopenVideoBtn");
+//   var ulweBtn = document.getElementById("reopenUlweBtn");
+//   var videoBtn = document.getElementById("reopenVideoBtn");
 
-  // Show both modals after 5 seconds
-  setTimeout(function () {
-    if (window.innerWidth < 768) {
-      // mobile → stack modals
-      ulweModal.show();
-      // setTimeout(() => videoModal.show(), 600); // small delay for stacking
-    } else {
-      // desktop → side by side
-      ulweModal.show();
-      // videoModal.show();
-    }
-  }, 5000);
+//   // Show both modals after 5 seconds
+//   setTimeout(function () {
+//     if (window.innerWidth < 768) {
+//       // mobile → stack modals
+//       ulweModal.show();
+//       // setTimeout(() => videoModal.show(), 600); // small delay for stacking
+//     } else {
+//       // desktop → side by side
+//       ulweModal.show();
+//       // videoModal.show();
+//     }
+//   }, 5000);
 
-  // ULWE modal events
-  document
-    .getElementById("ulweBranchModal")
-    .addEventListener("hidden.bs.modal", function () {
-      ulweBtn.style.display = "flex";
-    });
+//   // ULWE modal events
+//   document
+//     .getElementById("ulweBranchModal")
+//     .addEventListener("hidden.bs.modal", function () {
+//       ulweBtn.style.display = "flex";
+//     });
 
-  document
-    .getElementById("ulweBranchModal")
-    .addEventListener("shown.bs.modal", function () {
-      ulweBtn.style.display = "none";
-    });
+//   document
+//     .getElementById("ulweBranchModal")
+//     .addEventListener("shown.bs.modal", function () {
+//       ulweBtn.style.display = "none";
+//     });
 
-  const ulweCard = document.getElementById("ulweCard");
+//   const ulweCard = document.getElementById("ulweCard");
 
-  ulweCard.addEventListener("click", function () {
-    ulweModal.show();
-    document.getElementById("mouni-video").style.display = "none";
-  });
+//   ulweCard.addEventListener("click", function () {
+//     ulweModal.show();
+//     document.getElementById("mouni-video").style.display = "none";
+//   });
 
-  ulweBtn.addEventListener("click", function () {
-    ulweModal.show();
-    document.getElementById("mouni-video").style.display = "none";
-  });
+//   ulweBtn.addEventListener("click", function () {
+//     ulweModal.show();
+//     document.getElementById("mouni-video").style.display = "none";
+//   });
 
-  // VIDEO modal events
-  document
-    .getElementById("ulweBranchModal")
-    .addEventListener("hidden.bs.modal", function () {
-      videoBtn.style.display = "flex";
-    });
+//   // VIDEO modal events
+//   document
+//     .getElementById("ulweBranchModal")
+//     .addEventListener("hidden.bs.modal", function () {
+//       videoBtn.style.display = "flex";
+//     });
 
-  document
-    .getElementById("ulweBranchModal")
-    .addEventListener("shown.bs.modal", function () {
-      videoBtn.style.display = "none";
-    });
+//   document
+//     .getElementById("ulweBranchModal")
+//     .addEventListener("shown.bs.modal", function () {
+//       videoBtn.style.display = "none";
+//     });
 
-  videoBtn.addEventListener("click", function () {
-    videoModal.show();
-  });
-});
+//   videoBtn.addEventListener("click", function () {
+//     videoModal.show();
+//   });
+// });
 
 // document.getElementById("videoModal").addEventListener("hidden.bs.modal", function () {
 //   videoBtn.style.display = "flex";
