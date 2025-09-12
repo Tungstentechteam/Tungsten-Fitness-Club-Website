@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safari Video Autoplay Test</title>
+</head>
+<body style="background:#111; display:flex; justify-content:center; align-items:center; height:100vh;">
+
+  <video id="myVideo" width="80%" autoplay muted playsinline poster="">
+    <source src="./assets/videos/Mouni Roy.mp4" type="video/mp4">
+    Your browser does not support video.
+  </video>
+
+  <script>
+    const video = document.getElementById("myVideo");
+
+    // Force mute (Safari sometimes ignores HTML muted alone)
+    video.muted = true;
+    video.setAttribute("muted", "");
+    video.playsInline = true;
+
+    // Try autoplay
+    video.play().catch(err => {
+      console.log("Autoplay blocked:", err);
+    });
+
+    // Add controls only after video has started playing muted
+    video.addEventListener("playing", () => {
+      video.controls = true;
+      console.log("Video is playing muted with controls.");
+    });
+  </script>
+
+</body>
+</html>
