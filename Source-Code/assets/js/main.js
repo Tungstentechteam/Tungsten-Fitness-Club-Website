@@ -247,9 +247,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(autoScroll, 3000);
 });
 
-const video = document.getElementById("testimonialVideo");
-video.muted = true; // Safari sometimes ignores HTML muted
-video.setAttribute("muted", ""); // Ensure attribute is also applied
 
 function openVideoModal(videoUrl) {
   const modalVideo = document.getElementById("modalVideo");
@@ -311,12 +308,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial call
   updateVisibleIndex();
 });
+//start your journey form is in form-handle.js
 
-// home model form contact firebase  function
-
-
-
-async function saveUlweForm(event) {
+window.saveUlweForm = async function (event) {
   event.preventDefault();
 
   const form = event.target;
@@ -550,152 +544,153 @@ async function saveFormfranchise(event) {
   }
 };
 
-async function saveCareerForm(event) {
-  event.preventDefault();
-  const form = event.target;
+// career
+// window.saveCareerForm = async function (event) {
+//   event.preventDefault();
+//   const form = event.target;
 
-  const button = form.querySelector('button[type="submit"]');
-  const successMessage = document.getElementById("successMessage");
-  const spinner = button.querySelector(".spinner-border");
-  const buttonText = button.querySelector(".button-text");
+//   const button = form.querySelector('button[type="submit"]');
+//   const successMessage = document.getElementById("successMessage");
+//   const spinner = button.querySelector(".spinner-border");
+//   const buttonText = button.querySelector(".button-text");
 
-  // ✅ FIX: define loader element
-  const fullLoader = document.getElementById("fullScreenLoader");
+//   // ✅ FIX: define loader element
+//   const fullLoader = document.getElementById("fullScreenLoader");
 
-  const resumeFile = form.resume.files[0];
-  if (!resumeFile) {
-    // Alert with SweetAlert2
-    Swal.fire({
-      title: "Resume Required",
-      text: "Please upload your resume before submitting.",
-      icon: "warning",
-      background: "var(--surface-color)",
-      color: "var(--default-color)",
-      confirmButtonText: "OK",
-      confirmButtonColor: "var(--accent-color)",
-      iconColor: "#f39c12",
-    });
-    return;
-  }
+//   const resumeFile = form.resume.files[0];
+//   if (!resumeFile) {
+//     // Alert with SweetAlert2
+//     Swal.fire({
+//       title: "Resume Required",
+//       text: "Please upload your resume before submitting.",
+//       icon: "warning",
+//       background: "var(--surface-color)",
+//       color: "var(--default-color)",
+//       confirmButtonText: "OK",
+//       confirmButtonColor: "var(--accent-color)",
+//       iconColor: "#f39c12",
+//     });
+//     return;
+//   }
 
-  // --- Show loaders ---
-  button.disabled = true;
-  spinner.classList.remove("d-none");
-  buttonText.textContent = "Submitting...";
-  fullLoader.classList.remove("d-none"); // ✅ now works
-  document.body.style.overflow = "hidden";
+//   // --- Show loaders ---
+//   button.disabled = true;
+//   spinner.classList.remove("d-none");
+//   buttonText.textContent = "Submitting...";
+//   fullLoader.classList.remove("d-none"); // ✅ now works
+//   document.body.style.overflow = "hidden";
 
-  try {
-    // --- Firebase Setup (Dynamic Imports) ---
-    const { initializeApp } = await import(
-      "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"
-    );
-    const { getFirestore, collection, addDoc } = await import(
-      "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"
-    );
-    const { getStorage, ref, uploadBytes, getDownloadURL } = await import(
-      "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js"
-    );
+//   try {
+//     // --- Firebase Setup (Dynamic Imports) ---
+//     const { initializeApp } = await import(
+//       "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"
+//     );
+//     const { getFirestore, collection, addDoc } = await import(
+//       "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"
+//     );
+//     const { getStorage, ref, uploadBytes, getDownloadURL } = await import(
+//       "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js"
+//     );
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAG5VgFrw7dpTVCu0OtE00HQht2HN9O2rE",
-      authDomain: "tungsten-user-management.firebaseapp.com",
-      projectId: "tungsten-user-management",
-      storageBucket: "tungsten-user-management.firebasestorage.app",
-      messagingSenderId: "81220252865",
-      appId: "1:81220252865:web:693895e1d91306f1ba5040",
-      databaseURL:
-        "https://tungsten-user-management-default-rtdb.firebaseio.com/",
-    };
+//     const firebaseConfig = {
+//       apiKey: "AIzaSyAG5VgFrw7dpTVCu0OtE00HQht2HN9O2rE",
+//       authDomain: "tungsten-user-management.firebaseapp.com",
+//       projectId: "tungsten-user-management",
+//       storageBucket: "tungsten-user-management.firebasestorage.app",
+//       messagingSenderId: "81220252865",
+//       appId: "1:81220252865:web:693895e1d91306f1ba5040",
+//       databaseURL:
+//         "https://tungsten-user-management-default-rtdb.firebaseio.com/",
+//     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
+//     const app = initializeApp(firebaseConfig);
+//     const db = getFirestore(app);
+//     const storage = getStorage(app);
 
-    // --- 1. Upload Resume (This is the step that requires the CORS fix) ---
-    const storageRef = ref(storage, `resumes/${Date.now()}-${resumeFile.name}`);
-    const snapshot = await uploadBytes(storageRef, resumeFile);
-    const resumeUrl = await getDownloadURL(snapshot.ref);
+//     // --- 1. Upload Resume (This is the step that requires the CORS fix) ---
+//     const storageRef = ref(storage, `resumes/${Date.now()}-${resumeFile.name}`);
+//     const snapshot = await uploadBytes(storageRef, resumeFile);
+//     const resumeUrl = await getDownloadURL(snapshot.ref);
 
-    // --- 2. Save Data to Firestore ---
-    const formDataForFirebase = {
-      name: form.name.value,
-      email: form.email.value,
-      whatsapp: form.whatsapp.value,
+//     // --- 2. Save Data to Firestore ---
+//     const formDataForFirebase = {
+//       name: form.name.value,
+//       email: form.email.value,
+//       whatsapp: form.whatsapp.value,
 
-      position: form.position.value,
-      resume: resumeUrl,
-      source: "website",
-      status: "new",
-      form_type: form.page_name.value,
-      consent: {
-        whatsapp_updates: true, // ✅ user agrees since text is shown
-        agreedAt: new Date().toISOString(),
-      },
-      createdAt: new Date().toISOString(),
-    };
-    await addDoc(collection(db, "leads"), formDataForFirebase);
+//       position: form.position.value,
+//       resume: resumeUrl,
+//       source: "website",
+//       status: "new",
+//       form_type: form.page_name.value,
+//       consent: {
+//         whatsapp_updates: true, // ✅ user agrees since text is shown
+//         agreedAt: new Date().toISOString(),
+//       },
+//       createdAt: new Date().toISOString(),
+//     };
+//     await addDoc(collection(db, "leads"), formDataForFirebase);
 
-    // --- 3. Send Email Notification ---
-    const web3FormData = new FormData();
-    web3FormData.append("access_key", form.access_key.value);
-    web3FormData.append("page_name", form.page_name.value);
-    web3FormData.append("name", form.name.value);
-    web3FormData.append("email", form.email.value);
-    web3FormData.append("whatsapp", form.whatsapp.value);
+//     // --- 3. Send Email Notification ---
+//     const web3FormData = new FormData();
+//     web3FormData.append("access_key", form.access_key.value);
+//     web3FormData.append("page_name", form.page_name.value);
+//     web3FormData.append("name", form.name.value);
+//     web3FormData.append("email", form.email.value);
+//     web3FormData.append("whatsapp", form.whatsapp.value);
 
-    web3FormData.append("position", form.position.value);
-    web3FormData.append("Resume Link", resumeUrl);
+//     web3FormData.append("position", form.position.value);
+//     web3FormData.append("Resume Link", resumeUrl);
 
-    const web3Response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: web3FormData,
-    });
+//     const web3Response = await fetch("https://api.web3forms.com/submit", {
+//       method: "POST",
+//       body: web3FormData,
+//     });
 
-    const result = await web3Response.json();
-    console.log("Web3Forms response:", result);
+//     const result = await web3Response.json();
+//     console.log("Web3Forms response:", result);
 
-    if (web3Response.ok) {
-      console.log("Email sent successfully!");
+//     if (web3Response.ok) {
+//       console.log("Email sent successfully!");
 
-      // Success Popup with SweetAlert2
-      Swal.fire({
-        title: "Submitted!",
-        text: "Thank you for applying. We'll review your application and contact you soon.",
-        icon: "success",
-        background: "var(--surface-color)",
-        color: "var(--default-color)",
-        confirmButtonText: "OK",
-        confirmButtonColor: "var(--accent-color)",
-        iconColor: "var(--accent-color)",
-      });
+//       // Success Popup with SweetAlert2
+//       Swal.fire({
+//         title: "Submitted!",
+//         text: "Thank you for applying. We'll review your application and contact you soon.",
+//         icon: "success",
+//         background: "var(--surface-color)",
+//         color: "var(--default-color)",
+//         confirmButtonText: "OK",
+//         confirmButtonColor: "var(--accent-color)",
+//         iconColor: "var(--accent-color)",
+//       });
 
-      form.reset();
-    } else {
-      throw new Error("Email submission failed: " + JSON.stringify(result));
-    }
-  } catch (error) {
-    console.error("Error submitting form:", error);
+//       form.reset();
+//     } else {
+//       throw new Error("Email submission failed: " + JSON.stringify(result));
+//     }
+//   } catch (error) {
+//     console.error("Error submitting form:", error);
 
-    // Error Popup with SweetAlert2
-    Swal.fire({
-      title: "Application Error",
-      text: "An error occurred while submitting your application. Please try again.",
-      icon: "error",
-      background: "var(--surface-color)",
-      color: "var(--default-color)",
-      confirmButtonText: "Try Again",
-      confirmButtonColor: "var(--accent-color)",
-      iconColor: "#e74c3c",
-    });
-  } finally {
-    button.disabled = false;
-    spinner.classList.add("d-none");
-    buttonText.textContent = "SEND APPLICATION";
-    fullLoader.classList.add("d-none"); // ✅ hides loader
-    document.body.style.overflow = "auto";
-  }
-};
+//     // Error Popup with SweetAlert2
+//     Swal.fire({
+//       title: "Application Error",
+//       text: "An error occurred while submitting your application. Please try again.",
+//       icon: "error",
+//       background: "var(--surface-color)",
+//       color: "var(--default-color)",
+//       confirmButtonText: "Try Again",
+//       confirmButtonColor: "var(--accent-color)",
+//       iconColor: "#e74c3c",
+//     });
+//   } finally {
+//     button.disabled = false;
+//     spinner.classList.add("d-none");
+//     buttonText.textContent = "SEND APPLICATION";
+//     fullLoader.classList.add("d-none"); // ✅ hides loader
+//     document.body.style.overflow = "auto";
+//   }
+// };
 
 // lazy-load-video
 document.addEventListener("DOMContentLoaded", function () {
