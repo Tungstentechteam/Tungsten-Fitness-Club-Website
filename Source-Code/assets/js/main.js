@@ -247,10 +247,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(autoScroll, 3000);
 });
 
-            const video = document.getElementById("testimonialVideo");
-            video.muted = true;  // Safari sometimes ignores HTML muted
-            video.setAttribute("muted", ""); // Ensure attribute is also applied
-
 function openVideoModal(videoUrl) {
   const modalVideo = document.getElementById("modalVideo");
   const source = modalVideo.querySelector("source");
@@ -314,7 +310,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // home model form contact firebase  function
 
-window.saveForm = async function (event) {
+async function saveForm(event) {
   event.preventDefault();
 
   const form = event.target;
