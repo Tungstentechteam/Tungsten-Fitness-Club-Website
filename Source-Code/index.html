@@ -55,6 +55,7 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
   <link href="assets/css/main.css" rel="stylesheet">
   <link href="assets/css/form.css" rel="stylesheet">
@@ -79,9 +80,9 @@
           <li class="dropdown"><a href="index.html#branch"><span> Branches</span> <i
                 class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="branch.html">Nerul-Branch</a></li>
-              <li><a href="ghansolibranch.html">Ghansoli-Branch</a></li>
-              <li><a href="sanpadabranch.html">Sanpada-Branch</a></li>
+              <li><a href="tungsten_fitness_club_gym_Nerul.html">Nerul-Branch</a></li>
+              <li><a href="tungsten_fitness_club_gym_Ghansoli.html">Ghansoli-Branch</a></li>
+              <li><a href="tungsten_fitness_club_gym_Sanpada.html">Sanpada-Branch</a></li>
               <!-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#comingSoonModal">Ulwe-Branch</a></li> -->
               <li>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#ulweBranchModal">
@@ -280,8 +281,8 @@
 
             <div class="modal-body">
               <!-- Form -->
-              <form id="contactForm" onsubmit="saveForm(event)">
-                <input type="hidden" name="access_key" value="71282d82-2443-4652-a722-8f2be9ddf033">
+              <form id="contactForm" class="ajax-contact-form">
+                <input type="hidden" name="access_key" value="0a102f6a-d325-4871-801a-1a891bb4a37d">
                 <input type="hidden" name="form_type" value="contact">
 
                 <div class="mb-3">
@@ -549,7 +550,7 @@
                   <div class="row g-4">
                     <div class="col-md-4">
                       <div class="achievement-item">
-                        <a href="ghansolibranch.html">
+                        <a href="tungsten_fitness_club_gym_Ghansoli.html">
                           <img
                             src="https://firebasestorage.googleapis.com/v0/b/tungsten-user-management.firebasestorage.app/o/Tungsten-Website%2FOpportunities-images%2FTFC%20Ghansoli.webp?alt=media&token=cdb52311-2139-41ed-ad35-a4171516d229"
                             alt="Achievement" class="img-fluid" loading="lazy">
@@ -561,7 +562,7 @@
                     </div>
                     <div class="col-md-4">
                       <div class="achievement-item">
-                        <a href="sanpadabranch.html">
+                        <a href="tungsten_fitness_club_gym_Sanpada.html">
                           <img
                             src="https://firebasestorage.googleapis.com/v0/b/tungsten-user-management.firebasestorage.app/o/Tungsten-Website%2FOpportunities-images%2Ftungsten1.webp?alt=media&token=51a54cac-0c03-45b4-957f-c7608540fe44"
                             alt="Achievement" class="img-fluid" loading="lazy">
@@ -573,7 +574,7 @@
                     </div>
                     <div class="col-md-4">
                       <div class="achievement-item">
-                        <a href="branch.html">
+                        <a href="tungsten_fitness_club_gym_Nerul.html">
                           <img
                             src="https://firebasestorage.googleapis.com/v0/b/tungsten-user-management.firebasestorage.app/o/Tungsten-Website%2FOpportunities-images%2FTFC%20Nerul.webp?alt=media&token=161c24a3-72da-4330-a849-526ff5b15781"
                             alt="Achievement" class="img-fluid" loading="lazy">
@@ -1115,8 +1116,8 @@
               <h2 class="mb-3 fw-bold text-black text-center">Get In Touch</h2>
               <p class="mb-3" style="font-size: 0.9rem;">Welcome to Tungsten Fitness Club where strength meets
                 dedication.</p>
-              <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="saveForm(event)">
-                <input type="hidden" name="access_key" value="71282d82-2443-4652-a722-8f2be9ddf033" />
+              <form id="getInTouchForm" class="ajax-contact-form">
+                <input type="hidden" name="access_key" value="0a102f6a-d325-4871-801a-1a891bb4a37d" />
                 <input type="hidden" name="form_type" value="contact">
                 <div class="mb-3">
                   <label for="name" class="form-label-1" style="font-size: 0.9rem;">Your Name</label>
@@ -1417,6 +1418,7 @@ document.addEventListener("DOMContentLoaded", function () {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/form-handler.js" defer></script>
 </body>
 
 </html>
