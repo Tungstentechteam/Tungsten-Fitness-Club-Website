@@ -219,7 +219,8 @@
                 <form
                   action=""
                   class="ulwe-form"
-                  onsubmit="saveUlweForm(event)"
+                  method="post"
+                  id="ulweBranchForm"
                 >
                   <input
                     type="hidden"
@@ -472,7 +473,7 @@
 
               <div class="modal-body">
                 <!-- Form -->
-                <form id="contactForm" onsubmit="saveForm(event)">
+                <form id="contactForm" method="post">
                   <input
                     type="hidden"
                     name="access_key"

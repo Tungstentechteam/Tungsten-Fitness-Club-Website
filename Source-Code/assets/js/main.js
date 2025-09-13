@@ -247,6 +247,9 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(autoScroll, 3000);
 });
 
+const video = document.getElementById("testimonialVideo");
+video.muted = true; // Safari sometimes ignores HTML muted
+video.setAttribute("muted", ""); // Ensure attribute is also applied
 
 function openVideoModal(videoUrl) {
   const modalVideo = document.getElementById("modalVideo");
@@ -308,241 +311,242 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial call
   updateVisibleIndex();
 });
+
 //start your journey form is in form-handle.js
 
-window.saveUlweForm = async function (event) {
-  event.preventDefault();
+// window.saveUlweForm = async function (event) {
+//   event.preventDefault();
 
-  const form = event.target;
-  const button = form.querySelector("button[type='submit']");
-  const spinner = button.querySelector(".spinner-border");
-  const btnText = button.querySelector(".btn-text");
-  const fullLoader = document.getElementById("fullScreenLoader");
+//   const form = event.target;
+//   const button = form.querySelector("button[type='submit']");
+//   const spinner = button.querySelector(".spinner-border");
+//   const btnText = button.querySelector(".btn-text");
+//   const fullLoader = document.getElementById("fullScreenLoader");
 
-  // Show loader + disable
-  spinner?.classList.remove("d-none");
-  fullLoader?.classList.remove("d-none");
+//   // Show loader + disable
+//   spinner?.classList.remove("d-none");
+//   fullLoader?.classList.remove("d-none");
 
-  if (btnText) btnText.textContent = "Submitting...";
-  button.disabled = true;
+//   if (btnText) btnText.textContent = "Submitting...";
+//   button.disabled = true;
 
-  // Collect data safely
-  const nameEl = form.elements["name"];
-  const phoneEl = form.elements["phone"];
-  const formTypeEl = form.elements["form_type"];
+//   // Collect data safely
+//   const nameEl = form.elements["name"];
+//   const phoneEl = form.elements["phone"];
+//   const formTypeEl = form.elements["form_type"];
 
-  const formDataForFirebase = {
-    name: nameEl?.value?.trim() || "",
-    number: phoneEl?.value?.trim() || "",
-    email: "none",
-    message: "Ulwe Branch Inquiry",
-    branch: "Ulwe",
-    source: "website",
-    status: "new",
-    form_type: formTypeEl?.value || "Ulwe Inquiry",
-    createdAt: new Date().toISOString(),
-  };
+//   const formDataForFirebase = {
+//     name: nameEl?.value?.trim() || "",
+//     number: phoneEl?.value?.trim() || "",
+//     email: "none",
+//     message: "Ulwe Branch Inquiry",
+//     branch: "Ulwe",
+//     source: "website",
+//     status: "new",
+//     form_type: formTypeEl?.value || "Ulwe Inquiry",
+//     createdAt: new Date().toISOString(),
+//   };
 
-  try {
-    // --- Firebase (non-blocking: if it fails, we still try Web3Forms) ---
-    try {
-      const { initializeApp } = await import(
-        "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"
-      );
-      const { getFirestore, collection, addDoc } = await import(
-        "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"
-      );
+//   try {
+//     // --- Firebase (non-blocking: if it fails, we still try Web3Forms) ---
+//     try {
+//       const { initializeApp } = await import(
+//         "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"
+//       );
+//       const { getFirestore, collection, addDoc } = await import(
+//         "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"
+//       );
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyAG5VgFrw7dpTVCu0OtE00HQht2HN9O2rE",
-        authDomain: "tungsten-user-management.firebaseapp.com",
-        projectId: "tungsten-user-management",
-        storageBucket: "tungsten-user-management.firebasestorage.app",
-        messagingSenderId: "81220252865",
-        appId: "1:81220252865:web:693895e1d91306f1ba5040",
-        databaseURL:
-          "https://tungsten-user-management-default-rtdb.firebaseio.com/",
-      };
+//       const firebaseConfig = {
+//         apiKey: "AIzaSyAG5VgFrw7dpTVCu0OtE00HQht2HN9O2rE",
+//         authDomain: "tungsten-user-management.firebaseapp.com",
+//         projectId: "tungsten-user-management",
+//         storageBucket: "tungsten-user-management.firebasestorage.app",
+//         messagingSenderId: "81220252865",
+//         appId: "1:81220252865:web:693895e1d91306f1ba5040",
+//         databaseURL:
+//           "https://tungsten-user-management-default-rtdb.firebaseio.com/",
+//       };
 
-      if (!window.firebaseApp) {
-        window.firebaseApp = initializeApp(firebaseConfig);
-      }
-      const db = getFirestore(window.firebaseApp);
-      await addDoc(collection(db, "leads"), formDataForFirebase);
-    } catch (fbErr) {
-      console.warn("Firebase failed, continuing with Web3Forms:", fbErr);
-    }
+//       if (!window.firebaseApp) {
+//         window.firebaseApp = initializeApp(firebaseConfig);
+//       }
+//       const db = getFirestore(window.firebaseApp);
+//       await addDoc(collection(db, "leads"), formDataForFirebase);
+//     } catch (fbErr) {
+//       console.warn("Firebase failed, continuing with Web3Forms:", fbErr);
+//     }
 
-    // --- Web3Forms (must succeed) ---
-    const web3Res = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: new FormData(form),
-    });
+//     // --- Web3Forms (must succeed) ---
+//     const web3Res = await fetch("https://api.web3forms.com/submit", {
+//       method: "POST",
+//       body: new FormData(form),
+//     });
 
-    const web3Data = await web3Res.json();
-    if (!web3Data.success)
-      throw new Error(web3Data.message || "Web3Forms submission failed");
+//     const web3Data = await web3Res.json();
+//     if (!web3Data.success)
+//       throw new Error(web3Data.message || "Web3Forms submission failed");
 
-    // Success UI with SweetAlert2
-    Swal.fire({
-      title: "Submitted",
-      text: "Your Ulwe branch inquiry has been submitted successfully.",
-      icon: "success",
-      background: "var(--surface-color)",
-      color: "var(--default-color)",
-      confirmButtonText: "OK",
-      confirmButtonColor: "var(--accent-color)",
-      iconColor: "var(--accent-color)",
-    });
+//     // Success UI with SweetAlert2
+//     Swal.fire({
+//       title: "Submitted",
+//       text: "Your Ulwe branch inquiry has been submitted successfully.",
+//       icon: "success",
+//       background: "var(--surface-color)",
+//       color: "var(--default-color)",
+//       confirmButtonText: "OK",
+//       confirmButtonColor: "var(--accent-color)",
+//       iconColor: "var(--accent-color)",
+//     });
 
-    form.reset();
+//     form.reset();
 
-    setTimeout(() => {
-      const modalEl = document.getElementById("ulweBranchModal");
-      if (modalEl) {
-        // In case no instance exists yet, create one before hiding
-        let modalInstance = bootstrap.Modal.getInstance(modalEl);
-        if (!modalInstance) modalInstance = new bootstrap.Modal(modalEl);
-        modalInstance.hide();
-      }
+//     setTimeout(() => {
+//       const modalEl = document.getElementById("ulweBranchModal");
+//       if (modalEl) {
+//         // In case no instance exists yet, create one before hiding
+//         let modalInstance = bootstrap.Modal.getInstance(modalEl);
+//         if (!modalInstance) modalInstance = new bootstrap.Modal(modalEl);
+//         modalInstance.hide();
+//       }
 
-      // Clean up any leftover backdrop/scroll lock
-      document.querySelectorAll(".modal-backdrop").forEach((b) => b.remove());
-      document.body.classList.remove("modal-open");
-      fullLoader?.classList.add("d-none");
+//       // Clean up any leftover backdrop/scroll lock
+//       document.querySelectorAll(".modal-backdrop").forEach((b) => b.remove());
+//       document.body.classList.remove("modal-open");
+//       fullLoader?.classList.add("d-none");
 
-      document.body.style.overflow = "auto";
-    }, 1500);
-  } catch (err) {
-    console.error("Ulwe form error:", err);
+//       document.body.style.overflow = "auto";
+//     }, 1500);
+//   } catch (err) {
+//     console.error("Ulwe form error:", err);
 
-    // Error Popup with SweetAlert2
-    Swal.fire({
-      title: "Error!",
-      text: "Submission failed. Please try again or contact us directly.",
-      icon: "error",
-      background: "var(--surface-color)",
-      color: "var(--default-color)",
-      confirmButtonText: "Try Again",
-      confirmButtonColor: "var(--accent-color)",
-      iconColor: "#e74c3c",
-    });
-  } finally {
-    // Always restore button
-    spinner?.classList.add("d-none");
-    if (btnText) btnText.textContent = "Submit";
-    button.disabled = false;
-  }
-};
+//     // Error Popup with SweetAlert2
+//     Swal.fire({
+//       title: "Error!",
+//       text: "Submission failed. Please try again or contact us directly.",
+//       icon: "error",
+//       background: "var(--surface-color)",
+//       color: "var(--default-color)",
+//       confirmButtonText: "Try Again",
+//       confirmButtonColor: "var(--accent-color)",
+//       iconColor: "#e74c3c",
+//     });
+//   } finally {
+//     // Always restore button
+//     spinner?.classList.add("d-none");
+//     if (btnText) btnText.textContent = "Submit";
+//     button.disabled = false;
+//   }
+// };
 
-async function saveFormfranchise(event) {
-  event.preventDefault();
-  const form = event.target;
-  const button = form.querySelector("button[type='submit']");
-  const btnContent = button.querySelector(".btn-content");
-  const btnLoading = button.querySelector(".btn-loading");
-  const fullLoader = document.getElementById("fullScreenLoader");
-  const successMessage = document.getElementById("successMessage");
+// window.saveFormfranchise = async function (event) {
+//   event.preventDefault();
+//   const form = event.target;
+//   const button = form.querySelector("button[type='submit']");
+//   const btnContent = button.querySelector(".btn-content");
+//   const btnLoading = button.querySelector(".btn-loading");
+//   const fullLoader = document.getElementById("fullScreenLoader");
+//   const successMessage = document.getElementById("successMessage");
 
-  // Show loaders
-  btnContent.classList.add("d-none");
-  btnLoading.classList.remove("d-none");
-  button.disabled = true;
-  if (fullLoader) fullLoader.classList.remove("d-none");
-  document.body.style.overflow = "hidden";
+//   // Show loaders
+//   btnContent.classList.add("d-none");
+//   btnLoading.classList.remove("d-none");
+//   button.disabled = true;
+//   if (fullLoader) fullLoader.classList.remove("d-none");
+//   document.body.style.overflow = "hidden";
 
-  try {
-    // Collect selected checkboxes
-    const investmentSizes = Array.from(
-      form.querySelectorAll("input[name='investment_size']:checked")
-    ).map((cb) => cb.value);
+//   try {
+//     // Collect selected checkboxes
+//     const investmentSizes = Array.from(
+//       form.querySelectorAll("input[name='investment_size']:checked")
+//     ).map((cb) => cb.value);
 
-    // Firebase + Web3Forms logic
-    const formDataForFirebase = {
-      name: form.name.value,
-      email: form.email.value,
-      whatsapp: form.whatsapp.value,
-      message: form.message.value,
-      investment_size: investmentSizes,
-      form_type: "Lead Franchise",
-      consent: {
-        whatsapp_updates: true,
-        agreedAt: new Date().toISOString(),
-      },
-      createdAt: new Date().toISOString(),
-    };
+//     // Firebase + Web3Forms logic
+//     const formDataForFirebase = {
+//       name: form.name.value,
+//       email: form.email.value,
+//       whatsapp: form.whatsapp.value,
+//       message: form.message.value,
+//       investment_size: investmentSizes,
+//       form_type: "Lead Franchise",
+//       consent: {
+//         whatsapp_updates: true,
+//         agreedAt: new Date().toISOString(),
+//       },
+//       createdAt: new Date().toISOString(),
+//     };
 
-    // Firebase setup
-    const { initializeApp } = await import(
-      "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"
-    );
-    const { getFirestore, collection, addDoc } = await import(
-      "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"
-    );
+//     // Firebase setup
+//     const { initializeApp } = await import(
+//       "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"
+//     );
+//     const { getFirestore, collection, addDoc } = await import(
+//       "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"
+//     );
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAG5VgFrw7dpTVCu0OtE00HQht2HN9O2rE",
-      authDomain: "tungsten-user-management.firebaseapp.com",
-      projectId: "tungsten-user-management",
-      storageBucket: "tungsten-user-management.firebasestorage.app",
-      messagingSenderId: "81220252865",
-      appId: "1:81220252865:web:693895e1d91306f1ba5040",
-      databaseURL:
-        "https://tungsten-user-management-default-rtdb.firebaseio.com/",
-    };
+//     const firebaseConfig = {
+//       apiKey: "AIzaSyAG5VgFrw7dpTVCu0OtE00HQht2HN9O2rE",
+//       authDomain: "tungsten-user-management.firebaseapp.com",
+//       projectId: "tungsten-user-management",
+//       storageBucket: "tungsten-user-management.firebasestorage.app",
+//       messagingSenderId: "81220252865",
+//       appId: "1:81220252865:web:693895e1d91306f1ba5040",
+//       databaseURL:
+//         "https://tungsten-user-management-default-rtdb.firebaseio.com/",
+//     };
 
-    const app = initializeApp(firebaseConfig, "franchise-" + Date.now());
-    const db = getFirestore(app);
+//     const app = initializeApp(firebaseConfig, "franchise-" + Date.now());
+//     const db = getFirestore(app);
 
-    await addDoc(collection(db, "leads"), formDataForFirebase);
+//     await addDoc(collection(db, "leads"), formDataForFirebase);
 
-    // Submit to Web3Forms
-    const web3FormData = new FormData(form);
-    const web3Response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: web3FormData,
-    });
+//     // Submit to Web3Forms
+//     const web3FormData = new FormData(form);
+//     const web3Response = await fetch("https://api.web3forms.com/submit", {
+//       method: "POST",
+//       body: web3FormData,
+//     });
 
-    if (web3Response.ok) {
-      // Success Popup with SweetAlert2
-      Swal.fire({
-        title: "Submitted",
-        text: "Thank you for your interest in our franchise program. We'll contact you shortly.",
-        icon: "success",
-        background: "var(--surface-color)",
-        color: "var(--default-color)",
-        confirmButtonText: "OK",
-        confirmButtonColor: "var(--accent-color)",
-        iconColor: "var(--accent-color)",
-      });
+//     if (web3Response.ok) {
+//       // Success Popup with SweetAlert2
+//       Swal.fire({
+//         title: "Submitted",
+//         text: "Thank you for your interest in our franchise program. We'll contact you shortly.",
+//         icon: "success",
+//         background: "var(--surface-color)",
+//         color: "var(--default-color)",
+//         confirmButtonText: "OK",
+//         confirmButtonColor: "var(--accent-color)",
+//         iconColor: "var(--accent-color)",
+//       });
 
-      form.reset();
-    } else {
-      throw new Error("Web3Forms submission failed");
-    }
-  } catch (error) {
-    console.error("Error:", error);
+//       form.reset();
+//     } else {
+//       throw new Error("Web3Forms submission failed");
+//     }
+//   } catch (error) {
+//     console.error("Error:", error);
 
-    // Error Popup with SweetAlert2
-    Swal.fire({
-      title: "Error!",
-      text: "Error submitting form. Please try again or contact us directly.",
-      icon: "error",
-      background: "var(--surface-color)",
-      color: "var(--default-color)",
-      confirmButtonText: "Try Again",
-      confirmButtonColor: "var(--accent-color)",
-      iconColor: "#e74c3c",
-    });
-  } finally {
-    // Reset UI
-    btnContent.classList.remove("d-none");
-    btnLoading.classList.add("d-none");
-    button.disabled = false;
-    if (fullLoader) fullLoader.classList.add("d-none");
-    document.body.style.overflow = "auto";
-  }
-};
+//     // Error Popup with SweetAlert2
+//     Swal.fire({
+//       title: "Error!",
+//       text: "Error submitting form. Please try again or contact us directly.",
+//       icon: "error",
+//       background: "var(--surface-color)",
+//       color: "var(--default-color)",
+//       confirmButtonText: "Try Again",
+//       confirmButtonColor: "var(--accent-color)",
+//       iconColor: "#e74c3c",
+//     });
+//   } finally {
+//     // Reset UI
+//     btnContent.classList.remove("d-none");
+//     btnLoading.classList.add("d-none");
+//     button.disabled = false;
+//     if (fullLoader) fullLoader.classList.add("d-none");
+//     document.body.style.overflow = "auto";
+//   }
+// };
 
 // career
 // window.saveCareerForm = async function (event) {

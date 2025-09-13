@@ -44,8 +44,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
@@ -121,13 +119,13 @@
             <img src="./assets/img/1000228849.png" alt="Mouni Roy" />
           </div>
           <div class="content">
-            <p class="heading">COMING SOON <br /> IN ULWE</p>
+            <p class="heading">COMMMING SOON <br /> IN ULWE</p>
             <p class="text">GET A CHANCE TO MEET</p>
             <p class="name">Mouni Roy</p>
             <p class="text-1">SUBMIT YOUR DETAILS FOR <br /> EXCLUSIVE PREMIER OFFER</p>
             <p class="date">11<sup class="sup-text">TH</sup> OCTOBER 2025</p>
             <div class="form-container">
-              <form action="" class="ulwe-form" onsubmit="saveUlweForm(event)">
+              <form id="ulweBranchForm" class="ulwe-form" method="post">
                 <input type="hidden" name="access_key" value="71282d82-2443-4652-a722-8f2be9ddf033">
                 <input type="hidden" name="form_type" value="Ulwe Inquiry">
                 <input type="text" name="name" placeholder="Name" required />
@@ -283,8 +281,8 @@
 
             <div class="modal-body">
               <!-- Form -->
-              <form id="contactForm" class="ajax-contact-form">
-                <input type="hidden" name="access_key" value="0a102f6a-d325-4871-801a-1a891bb4a37d">
+              <form id="contactForm" class="ajax-contact-form" method="post">
+                <input type="hidden" name="access_key" value="71282d82-2443-4652-a722-8f2be9ddf033">
                 <input type="hidden" name="form_type" value="contact">
 
                 <div class="mb-3">
@@ -367,7 +365,7 @@
               <div class="stat-box">
                 <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="4000"
                     data-purecounter-duration="1" class="purecounter"></span>+</span>
-                <span class="stat-label">live membersss</span>
+                <span class="stat-label">live members</span>
               </div>
               <div class="stat-box">
                 <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="40"
@@ -415,7 +413,7 @@
               <div class="position-relative w-100" style="height: 300px;">
                 <video class="lazy-video position-absolute top-0 start-0 w-100 h-100 shadow" autoplay muted loop
                   playsinline preload="none" poster="assets/video-2/thumbnail.jpg">
-                  <source data-src="./assets/video-2/Services 1.mp4" type="video/mp4" />
+                  <source src="./assets/videos/services/Services 1.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -452,7 +450,7 @@
               <div class="position-relative w-100" style="height: 300px;">
                 <video class="lazy-video position-absolute top-0 start-0 w-100 h-100 object-cover" autoplay muted loop
                   playsinline preload="none" poster="assets/video-2/thumbnail.jpg">
-                  <source data-src="assets/video-2/Services 2.mp4" type="video/mp4" />
+                  <source src="./assets/videos/services/Services 2.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -489,7 +487,7 @@
               <div class="position-relative w-100" style="height: 300px;">
                 <video class="lazy-video position-absolute top-0 start-0 w-100 h-100 rounded-4 object-cover" autoplay
                   muted loop playsinline preload="none" poster="assets/video-2/thumbnail-3.jpg">
-                  <source data-src="assets/video-2/Services 3.mp4" type="video/mp4" />
+                  <source src="assets/videos/services/Services 3.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -910,7 +908,7 @@
                 onclick="openVideoModal('assets/videos/Tfcn Feedback June.mp4')">
                 <video autoplay muted loop playsinline poster="./assets/Thumbnails/Screenshot 2025-09-09 152024.png">
                   <source
-                    src="assets/videos/Tfcn Feedback June.mp4"
+                    src="assets/videos/testimonials/Tfcn Feedback June.mp4"
                     type="video/mp4" />
                 </video>
                 <div class="play-icon">
@@ -927,7 +925,7 @@
                 onclick="openVideoModal('./assets/videos/Tungsten Fitness Testimonial by Ananya.mp4')">
                 <video autoplay muted loop playsinline poster="./assets/Thumbnails/Screenshot 2025-09-09 152150.png">
                   <source
-                    src="./assets/videos/Tungsten Fitness Testimonial by Ananya.mp4"
+                    src="./assets/videos/testimonials/Tungsten Fitness Testimonial by Ananya.mp4"
                     type="video/mp4" />
                 </video>
                 <div class="play-icon">
@@ -943,7 +941,7 @@
               <div class="card video-card"
                 onclick="openVideoModal('./assets/videos/Tungsten Fitness testimonial by Aditya Devgadh.mp4')">
                 <video muted autoplay loop playsinline poster="./assets/Thumbnails/Screenshot 2025-09-09 151136.png">>
-                  <source src="./assets/videos/Tungsten Fitness testimonial by Aditya Devgadh.mp4" type="video/mp4" />
+                  <source src="./assets/videos/testimonials/Tungsten Fitness testimonial by Aditya Devgadh.mp4" type="video/mp4" />
                 </video>
                 <div class="play-icon">
                   <i class="fas fa-play"></i>
@@ -1119,7 +1117,7 @@
               <p class="mb-3" style="font-size: 0.9rem;">Welcome to Tungsten Fitness Club where strength meets
                 dedication.</p>
               <form id="getInTouchForm" class="ajax-contact-form">
-                <input type="hidden" name="access_key" value="0a102f6a-d325-4871-801a-1a891bb4a37d" />
+                <input type="hidden" name="access_key" value="71282d82-2443-4652-a722-8f2be9ddf033" />
                 <input type="hidden" name="form_type" value="contact">
                 <div class="mb-3">
                   <label for="name" class="form-label-1" style="font-size: 0.9rem;">Your Name</label>
@@ -1342,20 +1340,7 @@
   <div id="preloader">
     <img src="assets/img/logos/loader-logo.png" alt="Loading..." class="preloader-logo" loading="lazy">
   </div>
-
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/form-handler.js"></script>
-  <script>
+<script>
   // auto popup
 document.addEventListener("DOMContentLoaded", function () {
   var ulweModal = new bootstrap.Modal(
