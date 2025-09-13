@@ -247,6 +247,10 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(autoScroll, 3000);
 });
 
+const video = document.getElementById("testimonialVideo");
+video.muted = true; // Safari sometimes ignores HTML muted
+video.setAttribute("muted", ""); // Ensure attribute is also applied
+
 function openVideoModal(videoUrl) {
   const modalVideo = document.getElementById("modalVideo");
   const source = modalVideo.querySelector("source");
@@ -310,141 +314,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // home model form contact firebase  function
 
-async function saveForm(event) {
-  event.preventDefault();
 
-  const form = event.target;
-  const button = form.querySelector('button[type="submit"]');
-  const spinner = button.querySelector(".spinner-border");
-  const buttonText = button.querySelector(".button-text");
-  const successMessage = form.querySelector(".successMessage");
-  const fullLoader = document.getElementById("fullScreenLoader");
 
-  // 1️⃣ Show loader
-  spinner?.classList.remove("d-none");
-  buttonText && (buttonText.textContent = "Submitting...");
-  button.disabled = true;
-  fullLoader?.classList.remove("d-none");
-  successMessage?.classList.add("d-none");
-
-  // 2️⃣ Collect form data
-  const formDataForFirebase = {
-    name: form.name.value,
-    email: form?.email?.value || "none",
-    whatsapp: form.whatsapp.value,
-    message: form.message.value,
-    branch: form?.branch ? form.branch.value : "N/A", // ✅ fix
-    source: "website",
-    status: "new",
-    form_type: form.form_type ? form.form_type.value : "N/A",
-    consent: {
-      whatsapp_updates: true,
-      agreedAt: new Date().toISOString(),
-    },
-    createdAt: new Date().toISOString(),
-  };
-
-  try {
-    // --- Firebase Setup ---
-    const { initializeApp } = await import(
-      "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"
-    );
-    const { getFirestore, collection, addDoc } = await import(
-      "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"
-    );
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAG5VgFrw7dpTVCu0OtE00HQht2HN9O2rE",
-      authDomain: "tungsten-user-management.firebaseapp.com",
-      projectId: "tungsten-user-management",
-      storageBucket: "tungsten-user-management.firebasestorage.app",
-      messagingSenderId: "81220252865",
-      appId: "1:81220252865:web:693895e1d91306f1ba5040",
-      databaseURL:
-        "https://tungsten-user-management-default-rtdb.firebaseio.com/",
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    await addDoc(collection(db, "leads"), formDataForFirebase);
-
-    // --- Web3Forms Submission ---
-    const web3FormData = new FormData(form);
-    const web3Response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: web3FormData,
-    });
-
-    if (!web3Response.ok) throw new Error("Web3Forms submission failed");
-
-    // ✅ Success Popup with SweetAlert2
-    Swal.fire({
-      title: "Submitted",
-      text: "Your information has been submitted successfully. We'll contact you shortly!",
-      icon: "success",
-      background: "var(--surface-color)",
-      color: "var(--default-color)",
-      confirmButtonText: "OK",
-      confirmButtonColor: "var(--accent-color)",
-      iconColor: "var(--accent-color)",
-      customClass: {
-        popup: "premium-popup",
-        title: "premium-title",
-        htmlContainer: "premium-text",
-        confirmButton: "premium-btn",
-      },
-      showClass: {
-        popup: "animate__animated animate__fadeInDown",
-      },
-      hideClass: {
-        popup: "animate__animated animate__fadeOutUp",
-      },
-    });
-
-    form.reset();
-
-    setTimeout(() => {
-      fullLoader?.classList.add("d-none");
-      document.body.style.overflow = "auto";
-    }, 1500);
-  } catch (error) {
-    console.error("Form submission error:", error);
-    
-    // Error Popup with SweetAlert2
-    Swal.fire({
-      title: "Error!",
-      text: "Something went wrong. Please try again or contact us directly.",
-      icon: "error",
-      background: "var(--surface-color)",
-      color: "var(--default-color)",
-      confirmButtonText: "Try Again",
-      confirmButtonColor: "var(--accent-color)",
-      iconColor: "#e74c3c",
-    });
-    
-    fullLoader?.classList.add("d-none");
-  } finally {
-    // Reset button state
-    spinner?.classList.add("d-none");
-    buttonText && (buttonText.textContent = "Start My Journey");
-    button.disabled = false;
-  }
-};
-
-window.saveUlweForm = async function (event) {
+async function saveUlweForm(event) {
   event.preventDefault();
 
   const form = event.target;
   const button = form.querySelector("button[type='submit']");
   const spinner = button.querySelector(".spinner-border");
   const btnText = button.querySelector(".btn-text");
-    const fullLoader = document.getElementById("fullScreenLoader");
-
+  const fullLoader = document.getElementById("fullScreenLoader");
 
   // Show loader + disable
   spinner?.classList.remove("d-none");
-    fullLoader?.classList.remove("d-none");
+  fullLoader?.classList.remove("d-none");
 
   if (btnText) btnText.textContent = "Submitting...";
   button.disabled = true;
@@ -532,13 +415,13 @@ window.saveUlweForm = async function (event) {
       // Clean up any leftover backdrop/scroll lock
       document.querySelectorAll(".modal-backdrop").forEach((b) => b.remove());
       document.body.classList.remove("modal-open");
-            fullLoader?.classList.add("d-none");
+      fullLoader?.classList.add("d-none");
 
       document.body.style.overflow = "auto";
     }, 1500);
   } catch (err) {
     console.error("Ulwe form error:", err);
-    
+
     // Error Popup with SweetAlert2
     Swal.fire({
       title: "Error!",
@@ -558,7 +441,7 @@ window.saveUlweForm = async function (event) {
   }
 };
 
-window.saveFormfranchise = async function (event) {
+async function saveFormfranchise(event) {
   event.preventDefault();
   const form = event.target;
   const button = form.querySelector("button[type='submit']");
@@ -645,7 +528,7 @@ window.saveFormfranchise = async function (event) {
     }
   } catch (error) {
     console.error("Error:", error);
-    
+
     // Error Popup with SweetAlert2
     Swal.fire({
       title: "Error!",
@@ -667,8 +550,7 @@ window.saveFormfranchise = async function (event) {
   }
 };
 
-// career
-window.saveCareerForm = async function (event) {
+async function saveCareerForm(event) {
   event.preventDefault();
   const form = event.target;
 
@@ -775,7 +657,7 @@ window.saveCareerForm = async function (event) {
 
     if (web3Response.ok) {
       console.log("Email sent successfully!");
-      
+
       // Success Popup with SweetAlert2
       Swal.fire({
         title: "Submitted!",
@@ -787,14 +669,14 @@ window.saveCareerForm = async function (event) {
         confirmButtonColor: "var(--accent-color)",
         iconColor: "var(--accent-color)",
       });
-      
+
       form.reset();
     } else {
       throw new Error("Email submission failed: " + JSON.stringify(result));
     }
   } catch (error) {
     console.error("Error submitting form:", error);
-    
+
     // Error Popup with SweetAlert2
     Swal.fire({
       title: "Application Error",
