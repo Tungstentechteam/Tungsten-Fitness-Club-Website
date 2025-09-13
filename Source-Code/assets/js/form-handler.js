@@ -336,13 +336,12 @@ async function handleUlweFormSubmit(event) {
   event.preventDefault();
 
   const form = event.target;
-  // This form's button and spinner are structured differently
+
   const button = form.querySelector(".button-text");
   const spinner = form.querySelector(".spinner-border");
   const btnText = button.querySelector(".btn-text");
   const fullLoader = document.getElementById("fullScreenLoader");
 
-  // 2. Show loading state
   button.textContent = "Submitting...";
   button.disabled = true;
   spinner.classList.remove("d-none");
@@ -351,7 +350,6 @@ async function handleUlweFormSubmit(event) {
   button.disabled = true;
 
   try {
-    // 3. Collect form data
     const formDataForFirebase = {
       name: form.name.value,
       number: form.phone.value,
@@ -364,7 +362,6 @@ async function handleUlweFormSubmit(event) {
       createdAt: new Date().toISOString(),
     };
 
-    // 4. Send data to Firebase
     const { initializeApp } = await import(
       "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"
     );
@@ -383,7 +380,6 @@ async function handleUlweFormSubmit(event) {
     const db = getFirestore(app);
     await addDoc(collection(db, "leads"), formDataForFirebase);
 
-    // 5. Send data to Web3Forms
     const web3FormData = new FormData(form);
     const web3Response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
@@ -424,7 +420,6 @@ async function handleUlweFormSubmit(event) {
       iconColor: "#e74c3c",
     });
   } finally {
-    // 6. Always reset the button
     spinner?.classList.add("d-none");
     if (btnText) btnText.textContent = "Submit";
     button.disabled = false;
@@ -433,7 +428,6 @@ async function handleUlweFormSubmit(event) {
   }
 }
 
-// "Glue" code to attach the function to the Ulwe form
 document.addEventListener("DOMContentLoaded", function () {
   const ulweForm = document.getElementById("ulweBranchForm");
   if (ulweForm) {
