@@ -125,8 +125,8 @@
             <p class="text-1">SUBMIT YOUR DETAILS FOR <br /> EXCLUSIVE PREMIER OFFER</p>
             <p class="date">11<sup class="sup-text">TH</sup> OCTOBER 2025</p>
             <div class="form-container">
-              <form action="" class="ulwe-form" onsubmit="saveUlweForm(event)">
-                <input type="hidden" name="access_key" value="71282d82-2443-4652-a722-8f2be9ddf033">
+              <form id="ulweBranchForm" class="ulwe-form">
+                <input type="hidden" name="access_key" value="0a102f6a-d325-4871-801a-1a891bb4a37d">
                 <input type="hidden" name="form_type" value="Ulwe Inquiry">
                 <input type="text" name="name" placeholder="Name" required />
                 <input type="tel" name="phone" placeholder="Phone" required />
@@ -413,7 +413,7 @@
               <div class="position-relative w-100" style="height: 300px;">
                 <video class="lazy-video position-absolute top-0 start-0 w-100 h-100 shadow" autoplay muted loop
                   playsinline preload="none" poster="assets/video-2/thumbnail.jpg">
-                  <source data-src="assets/video-2/Services 1.mp4" type="video/mp4" />
+                  <source src="./assets/videos/services/Services 1.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -450,7 +450,7 @@
               <div class="position-relative w-100" style="height: 300px;">
                 <video class="lazy-video position-absolute top-0 start-0 w-100 h-100 object-cover" autoplay muted loop
                   playsinline preload="none" poster="assets/video-2/thumbnail.jpg">
-                  <source data-src="assets/video-2/Services 2.mp4" type="video/mp4" />
+                  <source src="./assets/videos/services/Services 2.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -487,7 +487,7 @@
               <div class="position-relative w-100" style="height: 300px;">
                 <video class="lazy-video position-absolute top-0 start-0 w-100 h-100 rounded-4 object-cover" autoplay
                   muted loop playsinline preload="none" poster="assets/video-2/thumbnail-3.jpg">
-                  <source data-src="assets/video-2/Services 3.mp4" type="video/mp4" />
+                  <source src="assets/videos/services/Services 3.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -908,7 +908,7 @@
                 onclick="openVideoModal('assets/videos/Tfcn Feedback June.mp4')">
                 <video autoplay muted loop playsinline poster="./assets/Thumbnails/Screenshot 2025-09-09 152024.png">
                   <source
-                    src="assets/videos/Tfcn Feedback June.mp4"
+                    src="assets/videos/testimonials/Tfcn Feedback June.mp4"
                     type="video/mp4" />
                 </video>
                 <div class="play-icon">
@@ -925,7 +925,7 @@
                 onclick="openVideoModal('./assets/videos/Tungsten Fitness Testimonial by Ananya.mp4')">
                 <video autoplay muted loop playsinline poster="./assets/Thumbnails/Screenshot 2025-09-09 152150.png">
                   <source
-                    src="./assets/videos/Tungsten Fitness Testimonial by Ananya.mp4"
+                    src="./assets/videos/testimonials/Tungsten Fitness Testimonial by Ananya.mp4"
                     type="video/mp4" />
                 </video>
                 <div class="play-icon">
@@ -941,7 +941,7 @@
               <div class="card video-card"
                 onclick="openVideoModal('./assets/videos/Tungsten Fitness testimonial by Aditya Devgadh.mp4')">
                 <video muted autoplay loop playsinline poster="./assets/Thumbnails/Screenshot 2025-09-09 151136.png">>
-                  <source src="./assets/videos/Tungsten Fitness testimonial by Aditya Devgadh.mp4" type="video/mp4" />
+                  <source src="./assets/videos/testimonials/Tungsten Fitness testimonial by Aditya Devgadh.mp4" type="video/mp4" />
                 </video>
                 <div class="play-icon">
                   <i class="fas fa-play"></i>
