@@ -54,19 +54,44 @@ async function handleAjaxFormSubmit(event) {
     });
     if (!web3Response.ok) throw new Error("Web3Forms submission failed");
 
-    form.reset();
-    const modal = bootstrap.Modal.getInstance(form.closest(".modal"));
-    if (modal) modal.hide();
     await Swal.fire({
+
       title: "Submitted!",
       text: "Thank you for submitting your request.",
+
+      title: "Success!",
+      text: "Your information has been submitted successfully. We'll contact you shortly!",
+
       icon: "success",
       background: "var(--surface-color)",
       color: "var(--default-color)",
       confirmButtonText: "OK",
       confirmButtonColor: "var(--accent-color)",
       iconColor: "var(--accent-color)",
+
+
+      customClass: {
+        popup: "premium-popup",
+        title: "premium-title",
+        htmlContainer: "premium-text",
+        confirmButton: "premium-btn",
+      },
+      showClass: {
+        popup: "animate__animated animate__fadeInDown",
+      },
+      hideClass: {
+        popup: "animate__animated animate__fadeOutUp",
+      },
+
     });
+    form.reset();
+    const modal = bootstrap.Modal.getInstance(form.closest(".modal"));
+    if (modal) modal.hide();
+
+    setTimeout(() => {
+      fullLoader?.classList.add("d-none");
+      document.body.style.overflow = "auto";
+    }, 1500);
   } catch (error) {
     console.error("ERROR BLOCK:", error);
     Swal.fire({
@@ -78,8 +103,12 @@ async function handleAjaxFormSubmit(event) {
     if (button) {
       button.disabled = false;
       spinner?.classList.add("d-none");
+
       fullLoader.classList.add("d-none");
       document.body.style.overflow = "auto";
+
+      fullLoader.classList.add("d-none"); // ✅ hides loader
+
       buttonText && (buttonText.textContent = "Start My Journey");
     }
     document.querySelectorAll(".modal-backdrop").forEach((el) => el.remove());
