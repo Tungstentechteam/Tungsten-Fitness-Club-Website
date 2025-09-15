@@ -924,3 +924,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
   scrollStep();
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const ulweModalEl = document.getElementById("ulweBranchModal");
+  const videoModalEl = document.getElementById("videoModal");
+  const reopenUlweBtn = document.getElementById("reopenUlweBtn");
+  const reopenVideoBtn = document.getElementById("reopenVideoBtn");
+
+  if (ulweModalEl && videoModalEl) {
+    const ulweModal = new bootstrap.Modal(ulweModalEl);
+    const videoModal = new bootstrap.Modal(videoModalEl);
+
+    setTimeout(() => {
+      ulweModal.show();
+    }, 3000);
+
+    ulweModalEl.addEventListener("hidden.bs.modal", () => {
+      if (reopenUlweBtn) reopenUlweBtn.style.display = "flex";
+    });
+
+    ulweModalEl.addEventListener("shown.bs.modal", () => {
+      if (reopenUlweBtn) reopenUlweBtn.style.display = "none";
+    });
+
+    if (reopenUlweBtn) {
+      reopenUlweBtn.addEventListener("click", () => {
+        ulweModal.show();
+        const mouniVideo = document.getElementById("mouni-video");
+        if (mouniVideo) mouniVideo.style.display = "none";
+      });
+    }
+
+    if (reopenVideoBtn) {
+      reopenVideoBtn.addEventListener("click", () => {
+        videoModal.show();
+      });
+    }
+  }
+});
