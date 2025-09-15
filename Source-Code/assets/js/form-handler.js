@@ -1,4 +1,4 @@
-//index page forms
+//index page form
 async function handleAjaxFormSubmit(event) {
   event.preventDefault();
 
@@ -55,7 +55,6 @@ async function handleAjaxFormSubmit(event) {
     if (!web3Response.ok) throw new Error("Web3Forms submission failed");
 
     await Swal.fire({
-
       title: "Submitted!",
       text: "Thank you for submitting your request.",
 
@@ -69,7 +68,6 @@ async function handleAjaxFormSubmit(event) {
       confirmButtonColor: "var(--accent-color)",
       iconColor: "var(--accent-color)",
 
-
       customClass: {
         popup: "premium-popup",
         title: "premium-title",
@@ -82,7 +80,6 @@ async function handleAjaxFormSubmit(event) {
       hideClass: {
         popup: "animate__animated animate__fadeOutUp",
       },
-
     });
     form.reset();
     const modal = bootstrap.Modal.getInstance(form.closest(".modal"));
@@ -107,7 +104,7 @@ async function handleAjaxFormSubmit(event) {
       fullLoader.classList.add("d-none");
       document.body.style.overflow = "auto";
 
-      fullLoader.classList.add("d-none"); // ✅ hides loader
+      fullLoader.classList.add("d-none");
 
       buttonText && (buttonText.textContent = "Start My Journey");
     }
@@ -367,24 +364,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //ulwe form
 async function handleUlweFormSubmit(event) {
-  // 1. Stop the page from reloading
   event.preventDefault();
 
   const form = event.target;
 
   const button = form.querySelector(".button-text");
   const spinner = form.querySelector(".spinner-border");
-  const btnText = button.querySelector(".btn-text");
   const fullLoader = document.getElementById("fullScreenLoader");
 
   button.textContent = "Submitting...";
   button.disabled = true;
   spinner.classList.remove("d-none");
-  fullLoader?.classList.remove("d-none");
-  if (btnText) btnText.textContent = "Submitting...";
-  button.disabled = true;
+  if (fullLoader) fullLoader.classList.remove("d-none");
+  document.body.style.overflow = "hidden";
 
   try {
+    // 3. Collect form data
     const formDataForFirebase = {
       name: form.name.value,
       number: form.phone.value,
@@ -424,7 +419,6 @@ async function handleUlweFormSubmit(event) {
 
     if (result.success) {
       form.reset();
-      // Hide the modal
       const modal = bootstrap.Modal.getInstance(form.closest(".modal"));
       if (modal) {
         modal.hide();
@@ -446,7 +440,7 @@ async function handleUlweFormSubmit(event) {
     console.error("Ulwe Form Error:", error);
     Swal.fire({
       title: "Error!",
-      text: "Submission failed. Please try again or contact us directly.",
+      text: "Error submitting form. Please try again or contact us directly.",
       icon: "error",
       background: "var(--surface-color)",
       color: "var(--default-color)",
@@ -455,14 +449,15 @@ async function handleUlweFormSubmit(event) {
       iconColor: "#e74c3c",
     });
   } finally {
-    spinner?.classList.add("d-none");
-    if (btnText) btnText.textContent = "Submit";
+    spinner.classList.add("d-none");
+    button.textContent = "Submit";
     button.disabled = false;
     if (fullLoader) fullLoader.classList.add("d-none");
     document.body.style.overflow = "auto";
   }
 }
 
+// "Glue" code to attach the function to the Ulwe form
 document.addEventListener("DOMContentLoaded", function () {
   const ulweForm = document.getElementById("ulweBranchForm");
   if (ulweForm) {
