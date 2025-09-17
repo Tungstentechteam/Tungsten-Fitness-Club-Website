@@ -248,6 +248,7 @@ async function handleCareerFormSubmit(event) {
     document.body.style.overflow = "auto";
   }
 }
+
 document.addEventListener("DOMContentLoaded", function () {
   const careerForm = document.getElementById("careerForm"); // Finds your form by its ID
   if (careerForm) {
@@ -365,9 +366,8 @@ document.addEventListener("DOMContentLoaded", function () {
 //ulwe form
 async function handleUlweFormSubmit(event) {
   event.preventDefault();
-
+  console.log("object")
   const form = event.target;
-
   const button = form.querySelector(".button-text");
   const spinner = form.querySelector(".spinner-border");
   const fullLoader = document.getElementById("fullScreenLoader");
@@ -379,63 +379,54 @@ async function handleUlweFormSubmit(event) {
   document.body.style.overflow = "hidden";
 
   try {
-    // 3. Collect form data
-    const formDataForFirebase = {
-      name: form.name.value,
-      number: form.phone.value,
-      email: "none",
-      message: "Ulwe Branch Inquiry",
-      branch: "Ulwe",
-      source: "website",
-      status: "new",
-      form_type: "Ulwe Inquiry",
-      createdAt: new Date().toISOString(),
-    };
+    // 1. Save in Firestore (via backend)
+    const response = await fetch("http://localhost:3000/api/forms/ulwe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: form.name.value,
+        phone: form.phone.value,
+        email: "none",
+      }),
+    });
 
-    const { initializeApp } = await import(
-      "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"
-    );
-    const { getFirestore, collection, addDoc } = await import(
-      "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js"
-    );
-    const firebaseConfig = {
-      apiKey: "AIzaSyAG5VgFrw7dpTVCu0OtE00HQht2HN9O2rE",
-      authDomain: "tungsten-user-management.firebaseapp.com",
-      projectId: "tungsten-user-management",
-      storageBucket: "tungsten-user-management.firebasestorage.app",
-      messagingSenderId: "81220252865",
-      appId: "1:81220252865:web:693895e1d91306f1ba5040",
-    };
-    const app = initializeApp(firebaseConfig, "ulwe-form-app-" + Date.now());
-    const db = getFirestore(app);
-    await addDoc(collection(db, "leads"), formDataForFirebase);
+    console.log(response)
 
+    const result = await response.json();
+
+    if (!result.success) {
+      throw new Error(result.message);
+    }
+
+    // 2. Submit to Web3Forms (directly from frontend)
     const web3FormData = new FormData(form);
+    web3FormData.append("access_key", "0a102f6a-d325-4871-801a-1a891bb4a37d");
     const web3Response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       body: web3FormData,
     });
-    const result = await web3Response.json();
+    const web3Result = await web3Response.json();
 
-    if (result.success) {
-      form.reset();
-      const modal = bootstrap.Modal.getInstance(form.closest(".modal"));
-      if (modal) {
-        modal.hide();
-      }
-      Swal.fire({
-        title: "Submitted",
-        text: "Your Ulwe branch inquiry has been submitted successfully.",
-        icon: "success",
-        background: "var(--surface-color)",
-        color: "var(--default-color)",
-        confirmButtonText: "OK",
-        confirmButtonColor: "var(--accent-color)",
-        iconColor: "var(--accent-color)",
-      });
-    } else {
-      throw new Error(result.message);
+    if (!web3Result.success) {
+      throw new Error(web3Result.message || "Web3Forms failed");
     }
+
+    // 3. UI Feedback
+    form.reset();
+    const modal = bootstrap.Modal.getInstance(form.closest(".modal"));
+    if (modal) modal.hide();
+
+    Swal.fire({
+      title: "Submitted",
+      text: "Your Ulwe branch inquiry has been submitted successfully.",
+      icon: "success",
+      background: "var(--surface-color)",
+      color: "var(--default-color)",
+      confirmButtonText: "OK",
+      confirmButtonColor: "var(--accent-color)",
+      iconColor: "var(--accent-color)",
+    });
+
   } catch (error) {
     console.error("Ulwe Form Error:", error);
     Swal.fire({
@@ -456,6 +447,7 @@ async function handleUlweFormSubmit(event) {
     document.body.style.overflow = "auto";
   }
 }
+
 
 // "Glue" code to attach the function to the Ulwe form
 document.addEventListener("DOMContentLoaded", function () {
