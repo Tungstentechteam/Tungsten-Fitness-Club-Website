@@ -5,28 +5,25 @@ const axios = require("axios");
 // Load ENV variables
 const WATI_BASE_URL = process.env.WATI_BASE_URL;
 const WATI_TOKEN = process.env.WATI_ACCESS_TOKEN;
-const OWNER_NUMBER = process.env.OWNER_NUMBER; // your number
-
-console.log("WATI Token:", process.env.WATI_ACCESS_TOKEN ? "Loaded ✅" : "Missing ❌");
+const OWNER_NUMBER1 = process.env.OWNER_NUMBER1; // your number
 
 
 // Reusable function to send WhatsApp message
-async function sendUserTemplate(number, name, branch) {
-  const url = `${process.env.WATI_BASE_URL}/api/v1/sendTemplateMessage?whatsappNumber=${number}`;
+async function sendUserTemplate(number, name) {
+  const url = `${WATI_BASE_URL}/api/v1/sendTemplateMessage?whatsappNumber=${number}`;
 
   return axios.post(
     url,
     {
-      template_name: "lead_confirmation",
+      template_name: "contact_form_confirmation",
       broadcast_name: "Lead Confirmation",
       parameters: [
         { name: "1", value: name },
-        { name: "2", value: branch },
       ],
     },
     {
       headers: {
-        Authorization: `Bearer ${process.env.WATI_TOKEN}`,
+        Authorization: `Bearer ${WATI_TOKEN}`,
         "Content-Type": "application/json",
       },
     }
@@ -39,7 +36,7 @@ async function sendAdminTemplate(ownerNumber, name, phone, branch, createdAt) {
   return axios.post(
     url,
     {
-      template_name: "lead_notification",
+      template_name: "lead_notify",
       broadcast_name: "Lead Notification",
       parameters: [
         { name: "1", value: name },
@@ -59,9 +56,19 @@ async function sendAdminTemplate(ownerNumber, name, phone, branch, createdAt) {
 
 
 exports.saveForm = async (req, res) => {
-  console.log("reach");
   try {
     const { name, phone, email } = req.body;
+    const dateOBJ = new Date();
+    const formattedIST = dateOBJ.toLocaleString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      hour12: false,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
 
     const formDataForFirebase = {
       name,
@@ -72,20 +79,19 @@ exports.saveForm = async (req, res) => {
       source: "website",
       status: "new",
       form_type: "Ulwe Inquiry",
-      createdAt: new Date().toISOString(),
+      createdAt: formattedIST,
     };
 
-    console.log("📩 Received form:", formDataForFirebase);
 
     // Save to Firestore
     await addDoc(collection(db, "leads-1"), formDataForFirebase);
 
     // ✅ Send WhatsApp messages
     // 1. To sender
-    await sendUserTemplate(formDataForFirebase.number, formDataForFirebase.name, formDataForFirebase.branch)
+    await sendUserTemplate(formDataForFirebase.number, formDataForFirebase.name)
 
     // 2. To website owner
-    await sendAdminTemplate(OWNER_NUMBER, formDataForFirebase.number, formDataForFirebase.name, formDataForFirebase.branch, formDataForFirebase.createdAt);
+    await sendAdminTemplate(OWNER_NUMBER1, formDataForFirebase.name, formDataForFirebase.number, formDataForFirebase.branch, formDataForFirebase.createdAt);
 
     return res.status(200).json({
       success: true,
