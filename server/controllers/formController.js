@@ -80,11 +80,16 @@ exports.saveForm = async (req, res) => {
       status: "new",
       form_type: "Ulwe Inquiry",
       createdAt: formattedIST,
+      consent: {
+        consentGiven: true,
+        agreedAt: formattedIST,
+        subscribeWhatsapp: true,
+        details: "User agreed to receive WhatsApp notifications and promotional activities.",
+      },
     };
 
-
     // Save to Firestore
-    await addDoc(collection(db, "leads-1"), formDataForFirebase);
+    await addDoc(collection(db, "leads"), formDataForFirebase);
 
     // ✅ Send WhatsApp messages
     // 1. To sender
