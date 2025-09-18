@@ -93,7 +93,7 @@ exports.saveForm = async (req, res) => {
 
     // ✅ Send WhatsApp messages
     // 1. To sender
-    await sendUserTemplate(formDataForFirebase.number, formDataForFirebase.name)
+    // await sendUserTemplate(formDataForFirebase.number, formDataForFirebase.name)
 
     // 2. To website owner
     await sendAdminTemplate(OWNER_NUMBER1, formDataForFirebase.name, formDataForFirebase.number, formDataForFirebase.branch, formDataForFirebase.createdAt);
