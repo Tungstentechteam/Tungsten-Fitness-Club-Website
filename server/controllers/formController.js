@@ -15,8 +15,8 @@ async function sendUserTemplate(number, name) {
   return axios.post(
     url,
     {
-      template_name: "contact_form_confirmation",
-      broadcast_name: "Lead Confirmation",
+      template_name: "contact_confirmation",
+      broadcast_name: "Form Confirmation",
       parameters: [
         { name: "1", value: name },
       ],
