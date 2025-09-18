@@ -7,7 +7,7 @@ require("dotenv").config();
 
 // ✅ Allow frontend origin
 app.use(cors({
-  origin: ["http://127.0.0.1:5500", "http://localhost:5500"], // allow your frontend origins
+  origin: ["https://tfcgym.in", "https://tungstenfitnessclub.com", "https://tungstenfitness.in"], // allow your frontend origins
   methods: ["GET", "POST"], // allowed methods
   allowedHeaders: ["Content-Type"], // headers allowed
 }));

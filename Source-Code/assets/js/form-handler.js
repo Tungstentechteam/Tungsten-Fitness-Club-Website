@@ -380,7 +380,7 @@ async function handleUlweFormSubmit(event) {
 
   try {
     // 1. Save in Firestore (via backend)
-    const response = await fetch("http://localhost:3000/api/forms/ulwe", {
+    const response = await fetch("https://tungsten-fitness-club-website.onrender.com/api/forms/ulwe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
