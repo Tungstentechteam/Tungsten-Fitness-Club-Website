@@ -400,7 +400,7 @@ async function handleUlweFormSubmit(event) {
 
     // 2. Submit to Web3Forms (directly from frontend)
     const web3FormData = new FormData(form);
-    web3FormData.append("access_key", "0a102f6a-d325-4871-801a-1a891bb4a37d");
+    web3FormData.append("access_key", "71282d82-2443-4652-a722-8f2be9ddf033");
     const web3Response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       body: web3FormData,
