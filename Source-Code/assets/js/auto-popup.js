@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("ulweBranchModal")
     .addEventListener("hidden.bs.modal", function () {
       ulweBtn.style.display = "flex";
+      document.getElementById("popupVideo").pause();
     });
 
   document
